@@ -14,7 +14,7 @@
 </template>
 
 <script>
-import {reactive, ref, watchEffect} from "vue";
+import {ref, watch} from "vue";
 
 export default {
   name: "Demo",
@@ -22,7 +22,7 @@ export default {
     // 数据
     let sum = ref(0);
     let message = ref('你好啊')
-    let person = reactive({
+    let person = ref({
       name: 'tom',
       age: 23,
       job: {
@@ -32,16 +32,13 @@ export default {
       }
     })
 
-    /*watch(sum, (newValue, oldValue) => {
+    watch(sum, (newValue, oldValue) => {
       console.log('sum改变了', newValue, oldValue)
-    }, {immediate: true})*/
-
-    watchEffect(() => {
-      const x1 = sum.value
-      const x2 = person.job.j1.salary
-      console.log('watchEffect所指定的回调执行了', x1, x2)
     })
 
+    watch(person, (newValue, oldValue) => {
+      console.log('person变了', newValue, oldValue)
+    }, {deep: true})
 
     return {
       sum,
